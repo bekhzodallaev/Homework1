@@ -1,31 +1,35 @@
-const numberInput = document.getElementById('input');
-const inputValue = document.querySelector('.result');
-const submitBtn = document.querySelector('.btn');
+const NUMBER_INPUT = document.getElementById('input');
+const INPUT_VALUE = document.querySelector('.result');
+const SUBMIT_BTN = document.querySelector('.btn');
 
 function getNum() {
-  return parseInt(numberInput.value, 10);
+  const value = parseInt(NUMBER_INPUT.value, 10);
+  return isNaN(value) ? null : value;
+}
+
+function isValid(value) {
+  return value !== null && value >= 0;
 }
 
 function convertBinary() {
-  let remainder = 0;
   let value = getNum();
   let binaryString = '';
+  let remainder;
 
-  if (value < 0) {
-    inputValue.textContent = 'Negative values are not supported';
+  if (!isValid(value)) {
+    INPUT_VALUE.textContent = 'Please enter a valid non-negative number';
     return;
   }
-
-  if (value == 0) {
+  if (value === 0) {
     binaryString = '0';
   } else {
     while (value > 0) {
       remainder = value % 2;
-      binaryString = remainder + binaryString;
       value = Math.floor(value / 2);
+      binaryString = remainder + binaryString;
     }
   }
-  inputValue.textContent = binaryString;
+  INPUT_VALUE.textContent = binaryString;
 }
 
-submitBtn.addEventListener('click', convertBinary);
+SUBMIT_BTN.addEventListener('click', convertBinary);
